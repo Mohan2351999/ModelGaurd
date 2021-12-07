@@ -23,11 +23,6 @@ import knockoff.utils.utils as knockoff_utils
 from knockoff.victim.blackbox import Blackbox
 import knockoff.config as cfg
 
-__author__ = "Tribhuvanesh Orekondy"
-__maintainer__ = "Tribhuvanesh Orekondy"
-__email__ = "orekondy@mpi-inf.mpg.de"
-__status__ = "Development"
-
 
 class JacobianAdversary(object):
     def __init__(self, blackbox, queryset, out_path, batch_size=8, num_workers=15, flush_interval=1000):

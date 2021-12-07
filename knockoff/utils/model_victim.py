@@ -23,7 +23,6 @@ import torchvision.models as torch_models
 import knockoff.config as cfg
 import knockoff.utils.utils as knockoff_utils
 
-
 def get_net(model_name, n_output_classes=1000, **kwargs):
     print('=> loading model {} with arguments: {}'.format(model_name, kwargs))
     valid_models = [x for x in torch_models.__dict__.keys() if not x.startswith('__')]

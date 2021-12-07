@@ -6,11 +6,6 @@ from torchvision.transforms import transforms
 
 import knockoff.config as cfg
 
-__author__ = "Tribhuvanesh Orekondy"
-__maintainer__ = "Tribhuvanesh Orekondy"
-__email__ = "orekondy@mpi-inf.mpg.de"
-__status__ = "Development"
-
 
 class DefaultTransforms:
     normalize = transforms.Normalize(mean=cfg.IMAGENET_MEAN,

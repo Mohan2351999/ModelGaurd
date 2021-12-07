@@ -23,11 +23,6 @@ import knockoff.utils.utils as knockoff_utils
 from knockoff.victim.blackbox import Blackbox
 import knockoff.config as cfg
 
-__author__ = "Tribhuvanesh Orekondy"
-__maintainer__ = "Tribhuvanesh Orekondy"
-__email__ = "orekondy@mpi-inf.mpg.de"
-__status__ = "Development"
-
 
 class AdaptiveAdversary(object):
     def __init__(self, blackbox, queryset, out_path, batch_size=8, num_workers=15, flush_interval=1000):
@@ -57,8 +52,10 @@ class AdaptiveAdversary(object):
     def get_transferset(self, budget):
         start_B = 0
         end_B = budget
+        # print(self.idx_set)
         with tqdm(total=budget) as pbar:
             for t, B in enumerate(range(start_B, end_B, self.batch_size)):
+                
                 idxs = np.random.choice(list(self.idx_set), replace=False,
                                         size=min(self.batch_size, budget - len(self.transferset)))
                 self.idx_set = self.idx_set - set(idxs)

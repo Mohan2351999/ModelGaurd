@@ -22,10 +22,6 @@ import knockoff.utils.model as model_utils
 import knockoff.models.zoo as zoo
 from knockoff import datasets
 
-__author__ = "Tribhuvanesh Orekondy"
-__maintainer__ = "Tribhuvanesh Orekondy"
-__email__ = "orekondy@mpi-inf.mpg.de"
-__status__ = "Development"
 
 
 class Blackbox(object):
@@ -64,7 +60,7 @@ class Blackbox(object):
         if not osp.exists(checkpoint_path):
             checkpoint_path = osp.join(model_dir, 'checkpoint.pth.tar')
         print("=> loading checkpoint '{}'".format(checkpoint_path))
-        checkpoint = torch.load(checkpoint_path)
+        checkpoint = torch.load(checkpoint_path,  map_location=torch.device('cpu'))
         epoch = checkpoint['epoch']
         best_test_acc = checkpoint['best_acc']
         model.load_state_dict(checkpoint['state_dict'])

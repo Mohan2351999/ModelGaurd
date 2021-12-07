@@ -21,10 +21,6 @@ import knockoff.utils.model as model_utils
 from knockoff import datasets
 import knockoff.models.zoo as zoo
 
-__author__ = "Tribhuvanesh Orekondy"
-__maintainer__ = "Tribhuvanesh Orekondy"
-__email__ = "orekondy@mpi-inf.mpg.de"
-__status__ = "Development"
 
 
 class TransferSetImagePaths(ImageFolder):
@@ -123,6 +119,8 @@ def main():
                         help='LR Decay Rate')
     parser.add_argument('-w', '--num_workers', metavar='N', type=int, help='# Worker threads to load data', default=10)
     parser.add_argument('--pretrained', type=str, help='Use pretrained network', default=None)
+    parser.add_argument('--img_obfs_tcq', metavar='TYPE', type=str, help='Image obfuscation technique', required=True)
+    parser.add_argument('--img_obfs_mag', metavar='TYPE', type=float, help='Image obfuscation magnitude', default=8)
     parser.add_argument('--weighted-loss', action='store_true', help='Use a weighted loss', default=False)
     # Attacker's defense
     parser.add_argument('--argmaxed', action='store_true', help='Only consider argmax labels', default=False)
@@ -159,13 +157,15 @@ def main():
 
     # ----------- Set up testset
     dataset_name = params['testdataset']
+    img_obfs_tcq = params['img_obfs_tcq']
+    img_obfs_mag = params['img_obfs_mag']
     valid_datasets = datasets.__dict__.keys()
     modelfamily = datasets.dataset_to_modelfamily[dataset_name]
     transform = datasets.modelfamily_to_transforms[modelfamily]['test']
     if dataset_name not in valid_datasets:
         raise ValueError('Dataset not found. Valid arguments = {}'.format(valid_datasets))
     dataset = datasets.__dict__[dataset_name]
-    testset = dataset(train=False, transform=transform)
+    testset = dataset(train=False, transform=transform, img_tcq=img_obfs_tcq, img_mag=img_obfs_mag)
     if len(testset.classes) != num_classes:
         raise ValueError('# Transfer classes ({}) != # Testset classes ({})'.format(num_classes, len(testset.classes)))
 
